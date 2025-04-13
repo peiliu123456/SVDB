@@ -1,4 +1,4 @@
-### SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation
+SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation
 
 ## This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on [SAR 🔗](https://github.com/mr-eggplant/SAR) and  [DCT (MM 2024) 🔗](https://github.com/yushuntang/DCT).
 ## 🚀 Method Integration: Building Upon SOTA Foundations
@@ -16,9 +16,7 @@
 </p>
 
 **Key Findings:**
-Using ViDA as baseline, we randomly selected semantic features (CLS tokens from the final layer) for 5 classes in ImageNet-C to generate t-SNE visualizations. The semantic drift phenomenon is significantly mitigated using ViDA+Reply, inspired by Reshaping (ECCV 2024). We reveal two critical issues:
-1. **Semantic Confusion**: Features cluster near decision boundaries
-2. **Semantic Overwriting**: Features cross boundaries, invading other classes' semantic space
+Although all domains share consistent classes without requiring new class learning, distribution shifts between old and new domains cause the acquired semantic knowledge of new domains to contain domain-specific information, which conflicts with that of prior domains, progressively overwriting their semantic information. This not only induces semantic confusion but also disrupts the original semantic space, leading to corruption of the semantic space and ultimately semantic drift. Specifically, as illustrated in Fig.~\ref{fig:introduction of semantic}, inspired by Reshaping (ECCV 2024) which mitigates catastrophic forgetting, we compared the semantic drift performance between the baseline and baseline+replay. The results demonstrate that sample replay significantly reduces semantic drift. This is because replaying old-domain samples alleviates forgetting, enabling to learn domain-shared semantic knowledge and effectively mitigates the conflict between new-domain and old-domain semantic spaces.
 
 
 ### 🔍 Comparisons with state-of-the-art methods on ImageNet-C (level 5) with BATCH SIZE=1 Accuracy (%).
