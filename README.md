@@ -2,7 +2,7 @@ SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in C
 
 This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on the [SAR 🔗](https://github.com/mr-eggplant/SAR).
 
-## 🔍 More Experiments: Forgetting resulting Semantic Drift Analysis
+## 🔍 More Experiments: Semantic Drift Analysis
 
 <p align="center">
 <img src="reply.jpg" alt="SVDB" width="100%" align=center />
@@ -14,7 +14,7 @@ Using ViDA as baseline, we randomly selected semantic features (CLS tokens from 
 2. **Semantic Overwriting**: Features cross boundaries, invading other classes' semantic space
 
 
-### Comparisons with state-of-the-art methods on ImageNet-C (level 5) with BATCH SIZE=1 Accuracy (%).
+### 🔍 Comparisons with state-of-the-art methods on ImageNet-C (level 5) with BATCH SIZE=1 Accuracy (%).
 
 | Method | REF         | gaussian | shot | impulse | defocus | glass | motion | zoom | snow | frost | fog  | brightness | contrast | elastic | pixelate | jpeg | Mean↑ |
 |--------|-------------|----------|------|---------|---------|-------|--------|------|------|-------|------|------------|----------|---------|----------|------|-------|
