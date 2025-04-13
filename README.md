@@ -2,7 +2,7 @@ SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in C
 
 This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on the [SAR 🔗](https://github.com/mr-eggplant/SAR).
 
-## 🔍 More Experiments: Semantic Drift Analysis
+## 🔍 More Experiments: Forgetting resulting Semantic Drift Analysis
 
 <p align="center">
 <img src="reply.jpg" alt="SVDB" width="100%" align=center />
