@@ -1,4 +1,4 @@
-SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation
+### SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation
 
 ## This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on [SAR 🔗](https://github.com/mr-eggplant/SAR) and  [DCT (MM 2024) 🔗](https://github.com/yushuntang/DCT).
 ## 🚀 Method Integration: Building Upon SOTA Foundations
