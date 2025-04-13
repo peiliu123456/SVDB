@@ -16,7 +16,7 @@ SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in C
 </p>
 
 **Key Findings:**
-Using ViDA as baseline, we randomly selected semantic features (CLS tokens from the final layer) for 5 classes in ImageNet-C to generate t-SNE visualizations. The semantic drift phenomenon is significantly mitigated using ViDA+Reply, inspired by Reshaping. We reveal two critical issues:
+Using ViDA as baseline, we randomly selected semantic features (CLS tokens from the final layer) for 5 classes in ImageNet-C to generate t-SNE visualizations. The semantic drift phenomenon is significantly mitigated using ViDA+Reply, inspired by Reshaping (ECCV 2024). We reveal two critical issues:
 1. **Semantic Confusion**: Features cluster near decision boundaries
 2. **Semantic Overwriting**: Features cross boundaries, invading other classes' semantic space
 
