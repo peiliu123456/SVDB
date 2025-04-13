@@ -2,13 +2,6 @@ SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in C
 
 This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on the [SAR 🔗](https://github.com/mr-eggplant/SAR).
 
-**SVDB Framework**
-<p align="center">
-<img src="overall.png" alt="SVDB" width="100%" align=center />
-</p>
-
-
-
 ## 🔍 More Experiments: Semantic Drift Analysis
 
 <p align="center">
@@ -30,6 +23,12 @@ Using ViDA as baseline, we randomly selected semantic features (CLS tokens from 
 | TENT   | ICLR 2020   | 56.9     | 58.1 | 58.4    | 45.0    | 50.5  | 58.4   | 50.0 | 51.9 | 56.3  | 58.7 | 78.2       | 11.4     | 59.5    | 70.1     | 71.4 | 55.7  |
 | DPAL   | ECCV 2024   | 0.3      | 0.1  | 0.1     | 0.1     | 0.1   | 0.1    | 0.1  | 0.1  | 0.1   | 0.1  | 0.1        | 0.1      | 0.1     | 0.1      | 0.1  | 0.1   |
 | DCT    | MM 2024     | 0.3      | 0.1  | 0.1     | 0.1     | 0.1   | 0.1    | 0.1  | 0.1  | 0.1   | 0.1  | 0.1        | 0.1      | 0.1     | 0.1      | 0.1  | 0.1   |
+
+
+## SVDB Framework
+<p align="center">
+<img src="overall.png" alt="SVDB" width="100%" align=center />
+</p>
 
 **Installation**:
 This repository contains code for evaluation on ImageNet-C,CIFAR10-C,CIFAR100-C, ImageNet-R, VisDA-2021, ACDC with ViT.
