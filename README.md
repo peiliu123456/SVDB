@@ -9,7 +9,7 @@ SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in C
 - [**BECoTTA** (ICML 2024) 🔗](https://github.com/RanXu2000/continual-mae?tab=readme-ov-file)
 
 
-##🔍 More Experiments: Forgetting resulting Semantic Drift Analysis
+### 🔍 More Experiments: Forgetting resulting Semantic Drift Analysis
 
 <p align="center">
 <img src="reply.jpg" alt="SVDB" width="100%" align=center />
