@@ -1,15 +1,7 @@
-SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation
+Mitigating Semantic Drift in Continual Test-Time Adaptation via Semantic Distillation and Alignment
 
-## This is the official project repository for SVDB: Semantic-Preserving Virtual Decision Boundary Mitigate Semantic Drift in Continual Test-Time Adaptation. This repository is built based on [SAR (ICLR 2023)🔗](https://github.com/mr-eggplant/SAR), [DCT (MM 2024) 🔗](https://github.com/yushuntang/DCT) and [DPAL (ECCV 2024) 🔗](https://github.com/yushuntang/DCT).
+## This is the official project repository for Mitigating Semantic Drift in Continual Test-Time Adaptation via Semantic Distillation and Alignment. This repository is built based on [SAR (ICLR 2023)🔗](https://github.com/mr-eggplant/SAR), [DCT (MM 2024) 🔗](https://github.com/yushuntang/DCT) and [DPAL (ECCV 2024) 🔗](https://github.com/yushuntang/DCT).
 
-### 🔍 More Experiments: Forgetting resulting Semantic Drift Analysis
-
-<p align="center">
-<img src="reply.jpg" alt="SVDB" width="100%" align=center />
-</p>
-
-**Key Findings:**
-Although all domains share consistent classes without requiring new class learning, distribution shifts between old and new domains cause the acquired semantic knowledge of new domains to contain domain-specific information, which conflicts with that of prior domains, progressively overwriting their semantic information. This not only induces semantic confusion but also disrupts the original semantic space, leading to corruption of the semantic space and ultimately semantic drift. Specifically, inspired by Reshaping (ECCV 2024) which mitigates catastrophic forgetting, we compared the semantic drift performance between the baseline and baseline+replay. The results demonstrate that sample replay significantly reduces semantic drift. This is because replaying old-domain samples alleviates forgetting, enabling to learn domain-shared semantic knowledge and effectively mitigates the conflict between new-domain and old-domain semantic spaces.
 
 
 ### 🔍 Comparisons with state-of-the-art methods on ImageNet-C (level 5) with BATCH SIZE=1 Accuracy (%).
@@ -22,11 +14,6 @@ Although all domains share consistent classes without requiring new class learni
 | DPAL   | ECCV 2024   | 0.3      | 0.1  | 0.1     | 0.1     | 0.1   | 0.1    | 0.1  | 0.1  | 0.1   | 0.1  | 0.1        | 0.1      | 0.1     | 0.1      | 0.1  | 0.1   |
 | DCT    | MM 2024     | 0.3      | 0.1  | 0.1     | 0.1     | 0.1   | 0.1    | 0.1  | 0.1  | 0.1   | 0.1  | 0.1        | 0.1      | 0.1     | 0.1      | 0.1  | 0.1   |
 
-
-## SVDB Framework
-<p align="center">
-<img src="overall.png" alt="SVDB" width="100%" align=center />
-</p>
 
 **Installation**:
 This repository contains code for evaluation on ImageNet-C,CIFAR10-C,CIFAR100-C, ImageNet-R, VisDA-2021, ACDC with ViT.
@@ -41,7 +28,7 @@ For ImageNet-C,ImageNet-R and  VisDA-2021, the pre-trained ViT-B model weights a
 
 
 **Details of ours code**:
-In ./models/svdb\_transformer.py, we implemented Semantic Knowledge Preservation. In vdb\_loss.py, we implemented Virtual Decision Boundary.
+In ./models/svdb\_transformer.py, we implemented Semantic Distillation. In vdb\_loss.py, we implemented Semantic Alignment.
 
 **Usage in ImageNet-C**:
 ```
