@@ -13,7 +13,7 @@ from dataset.selectedRotateImageFolder import prepare_test_data, prepare_random_
 from utils.cli_utils import *
 import torch
 import torch.nn.functional as F
-import tent, sar, dct, dpal, cotta, svdb
+import tent, sar, dct, dpal, cotta, sda
 from sam import SAM
 
 import timm
@@ -21,7 +21,7 @@ import models.Res as Resnet
 from models.dct_attention import DCT_Attention
 from models.dpal_transformer import DPAL_Transformer
 
-from models.SVDB_transformer import SVDB_Transformer
+from models.SDA_transformer import SDA_Transformer
 import copy, json
 import clip
 from robustbench.data import load_cifar10c
@@ -48,14 +48,25 @@ def validate(val_loader, model, args, mode='eval'):
         [batch_time, top1, top5],
         prefix='Test: ')
     end = time.time()
+
     for i, dl in enumerate(val_loader):
         images, target = dl[0].cuda(), dl[1].cuda()
-        output = model(images)
+        # output = model(images)
+        if args.corruption == 'gaussian_noise':
+            output = model(images)
+        else:
+            output = model.forward_repeat(images)
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
         top1.update(acc1[0], images.size(0))
         top5.update(acc5[0], images.size(0))
         batch_time.update(time.time() - end)
         end = time.time()
+        acc1_value = acc1.item()
+
+        # 以追加模式写入 acc1 的值
+        with open("acc1_log.txt", "a") as f:
+            f.write(f"{acc1_value:.2f}\n")  # 保留两位小数，每次一行
+
         if i % args.print_freq == 0:
             progress.display(i)
         if i > 10 and args.debug:
@@ -175,7 +186,7 @@ def get_args():
 
     # path
     parser.add_argument('--dataset', default='imagenet-c', help='path to dataset')
-    parser.add_argument('--data_corruption', default='E:\imagenet-c', help='path to corruption dataset')
+    parser.add_argument('--data_corruption', default='D:\迅雷下载\imagenet-c', help='path to corruption dataset')
     parser.add_argument('--output', default='./exps', help='the output directory of this experiment')
 
     parser.add_argument('--seed', default=2021, type=int, help='seed for initializing training. ')
@@ -260,12 +271,8 @@ if __name__ == '__main__':
     logger = get_logger(name="project", output_directory=args.output, log_name=args.logger_name, debug=False)
     #
     if args.dataset == 'imagenet-c':
-        common_corruptions = common_corruptions = ['gaussian_noise', 'shot_noise', 'impulse_noise', 'defocus_blur',
-                                                   'glass_blur',
-                                                   'motion_blur',
-                                                   'zoom_blur', 'snow', 'frost', 'fog', 'brightness', 'contrast',
-                                                   'elastic_transform',
-                                                   'pixelate', 'jpeg_compression']
+        common_corruptions = ['gaussian_noise', 'shot_noise', 'impulse_noise', 'contrast',
+                              'elastic_transform']
     elif args.dataset == 'VisDA-2021':
         common_corruptions = ['VisDA-2021']
     elif args.dataset == 'imagenet-r':
@@ -276,7 +283,7 @@ if __name__ == '__main__':
     fewshot_acc1s = []
     ir = args.imbalance_ratio
     bs = args.test_batch_size
-    if args.method in ['tent', 'sar', 'no_adapt', 'dct', 'dpal', 'cotta', 'svdb']:
+    if args.method in ['tent', 'sar', 'no_adapt', 'dct', 'dpal', 'cotta', 'sda']:
         if args.model == "vitbase_timm":
             if args.method == 'dct':
                 net = timm.create_model('vit_base_patch16_224', pretrained=False)
@@ -289,8 +296,8 @@ if __name__ == '__main__':
                 net = DPAL_Transformer(args)
                 state_dict = torch.load('vit_base_patch16_224.pth')
                 net.load_state_dict(state_dict, strict=False)
-            elif args.method == 'svdb':
-                net = SVDB_Transformer(args)
+            elif args.method == 'sda':
+                net = SDA_Transformer(args)
                 state_dict = torch.load('vit_base_patch16_224.pth')
                 net.load_state_dict(state_dict, strict=False)
             elif args.method in ['sar', 'no_adapt', 'tent', 'cotta']:
@@ -308,15 +315,15 @@ if __name__ == '__main__':
         logger.info(param_names)
         optimizer = torch.optim.SGD(params, args.lr, momentum=0.9)
         adapt_net = tent.Tent(net, optimizer, args)
-    elif args.method == "svdb":
-        net = svdb.configure_model(net)
-        params, param_names = svdb.collect_params(net)
+    elif args.method == "sda":
+        net = sda.configure_model(net)
+        params, param_names = sda.collect_params(net)
         logger.info(param_names)
         optimizer = torch.optim.SGD(params, args.lr, momentum=0.9)
-        adapt_net = svdb.SVDB(net, optimizer, args)
+        adapt_net = sda.SVDB(net, optimizer, args)
     elif args.method == "no_adapt":
-        adapt_net = net
         net.eval()
+        adapt_net = net
     elif args.method in ['sar']:
         net = sar.configure_model(net)
         params, param_names = sar.collect_params(net, args)
@@ -349,7 +356,7 @@ if __name__ == '__main__':
         args.corruption = corrupt
         bs = args.test_batch_size
         args.print_freq = 50000 // 20 // bs
-        if args.method in ['tent', 'sar', 'no_adapt', 'dct', 'dpal', 'cotta', 'svdb']:
+        if args.method in ['tent', 'sar', 'no_adapt', 'dct', 'dpal', 'cotta', 'sda']:
             if args.corruption != 'mix_shifts':
                 if args.dataset == 'VisDA-2021':
                     from utils.get_visda2021 import get_dataloaders
@@ -393,10 +400,11 @@ if __name__ == '__main__':
             indices = np.load(indices_path)
             val_dataset.set_specific_subset(indices.astype(int).tolist())
         logger.info(args)
-        top1, top5 = validate(val_loader, adapt_net, args, mode='eval', repeat=False)
+        top1, top5 = validate(val_loader, adapt_net, args, mode='eval')
         logger.info(
             f"Result under {args.corruption}. The adaptation accuracy of {args.method} is top1: {top1:.5f} and top5: {top5:.5f}")
         acc1s.append(top1.item())
+
         avg1 = sum(acc1s) / len(acc1s)
         logger.info(f"Average acc1s are {avg1}")
         acc5s.append(top5.item())

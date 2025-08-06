@@ -12,9 +12,9 @@ from dataset.selectedRotateImageFolder import prepare_test_data, prepare_random_
 from utils.cli_utils import *
 import torch
 import torch.nn.functional as F
-import tent, sar, dct, dpal, svdb
+import tent, sar, dct, dpal, sda
 from sam import SAM
-from models.SVDB_transformer import SVDB_Transformer
+from models.SDA_transformer import SDA_Transformer
 import timm
 import models.Res as Resnet
 from models.dct_attention import DCT_Attention
@@ -63,7 +63,7 @@ def get_args():
 
     # path
     parser.add_argument('--dataset', default='imagenet-c', help='path to dataset')
-    parser.add_argument('--data_corruption', default='D:\imagenet-c', help='path to corruption dataset')
+    parser.add_argument('--data_corruption', default='D:\迅雷下载\imagenet-c', help='path to corruption dataset')
     parser.add_argument('--output', default='./exps', help='the output directory of this experiment')
 
     parser.add_argument('--seed', default=2021, type=int, help='seed for initializing training. ')
@@ -175,7 +175,7 @@ if __name__ == '__main__':
                 checkpoint = rm_substr_from_state_dict(checkpoint['model'], 'module.')
                 net.load_state_dict(checkpoint, strict=False)
             elif args.method == 'svdb':
-                net = SVDB_Transformer(args)
+                net = SDA_Transformer(args)
                 checkpoint = torch.load(f"vit_base_384_cifar{args.num_classes}.t7",
                                         map_location=torch.device('cpu'))
                 checkpoint = rm_substr_from_state_dict(checkpoint['model'], 'module.')
@@ -222,11 +222,11 @@ if __name__ == '__main__':
         ad_optimizer = torch.optim.SGD(prompt_params, momentum=0.9)
         adapt_net = dpal.DPAL(net, args, optimizer, ad_optimizer, margin_e0=args.sar_margin_e0)
     elif args.method == 'svdb':
-        net = svdb.configure_model(net)
-        params, param_names = svdb.collect_params(net)
+        net = sda.configure_model(net)
+        params, param_names = sda.collect_params(net)
         logger.info(param_names)
         optimizer = torch.optim.SGD(params, args.lr, momentum=0.9)
-        adapt_net = svdb.SVDB(net, optimizer, args)
+        adapt_net = sda.SDA(net, optimizer, args)
     else:
         assert False, NotImplementedError
 
