@@ -16,7 +16,7 @@ For ImageNet-C,ImageNet-R and  Visda-2021, the pre-trained ViT-B model weights a
 
 
 **Details of ours code**:
-In ./models/svdb\_transformer.py, we implemented Semantic Distillation. In vdb\_loss.py, we implemented Semantic Alignment.
+In ./models/sda\_transformer.py, we implemented Semantic Distillation. In sa\_loss.py, we implemented Semantic Alignment.
 
 **Usage in ImageNet-C**:
 ```
