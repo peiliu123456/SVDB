@@ -4,9 +4,9 @@ Mitigating Semantic Drift in Continual Test-Time Adaptation via Semantic Distill
 
 
 **Installation**:
-This repository contains code for evaluation on ImageNet-C,CIFAR10-C,CIFAR100-C, ImageNet-R, VisDA-2021, ACDC with ViT.
+This repository contains code for evaluation on ImageNet-C,CIFAR10-C,CIFAR100-C, ImageNet-R, Visda-2021, ACDC with ViT.
 For CIFAR10-C and CIFAR100-C, the pre-trained ViT-B model weights are from [MAE (CVPR 2024) 🔗](https://github.com/RanXu2000/continual-mae?tab=readme-ov-file)
-For ImageNet-C,ImageNet-R and  VisDA-2021, the pre-trained ViT-B model weights are from timm .
+For ImageNet-C,ImageNet-R and  Visda-2021, the pre-trained ViT-B model weights are from timm .
 
 **Dataset Download**:
 
@@ -20,7 +20,7 @@ In ./models/svdb\_transformer.py, we implemented Semantic Distillation. In vdb\_
 
 **Usage in ImageNet-C**:
 ```
-python main.py --method SDA--test_batch_size 64 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
+python main.py --method sda--test_batch_size 64 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method dct --test_batch_size 64 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method dpal --test_batch_size 64 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method sar --test_batch_size 64 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
@@ -29,7 +29,7 @@ python main.py --method cotta --test_batch_size 64 --lr 1e-4  --num_classes 1000
 ```
 **Usage in ImageNet-C BATCH SIZE=1**:
 ```
-python main.py --method SDA--test_batch_size 1 --lr 1e-4 --num_classes 1000 --device 0  --data_corruption XX
+python main.py --method sda--test_batch_size 1 --lr 1e-4 --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method dct --test_batch_size 1 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method dpal --test_batch_size 1 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
 python main.py --method sar --test_batch_size 1 --lr 1e-3  --num_classes 1000 --device 0  --data_corruption XX
@@ -41,8 +41,8 @@ python main.py --method cotta --test_batch_size 1 --lr 1e-4  --num_classes 1000 
 
 **Usage in CIFAR10-C and CIFAR100-C**:
 ```
-python cifar_main.py --method SDA--test_batch_size 32 --lr 1e-3 --num_classes 10 --device 0
-python cifar_main.py --method SDA--test_batch_size 32 --lr 1e-3  --num_classes 100 --device 0
+python cifar_main.py --method sda--test_batch_size 32 --lr 1e-3 --num_classes 10 --device 0
+python cifar_main.py --method sda--test_batch_size 32 --lr 1e-3  --num_classes 100 --device 0
 
 python cifar_main.py --method dct --test_batch_size 32 --lr 1e-3  --num_classes 10 --device 0
 python cifar_main.py --method dct --test_batch_size 32 --lr 1e-3  --num_classes 100 --device 0
